@@ -1,0 +1,1 @@
+Personal learning project on an AVR ATmega16A-PU - DIP microcontroller.
