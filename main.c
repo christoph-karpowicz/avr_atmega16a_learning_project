@@ -3,21 +3,19 @@
 #endif
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 
-#define KEY_PRESSED !(PINC & (1 << PC0))
+ISR(INT0_vect) {
+    PORTC |= (1 << PC0);
+}
 
 int main(void) {
-    DDRD |= 0xFF;
-    // DDRC |= (1 << PC1);
+    DDRC |= 0xFF;
+    GICR |= (1 << INT0);
+    sei();
     while (1) {
-        if (KEY_PRESSED) {
-            PORTD = 0xFF;
-            // PORTC |= (1 << PC1);
-        } else {
-            PORTD = 0x00;
-            // PORTC &= !(1 << PC1);
-        }
+        PORTC &= !(1 << PC0);
     }
     return 0;
 }
